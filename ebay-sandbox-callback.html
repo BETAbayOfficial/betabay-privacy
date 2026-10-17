@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>BETAbay // OAuth Sandbox</title>
+<style>body{background:#020804;color:#92ffab;font:16px/1.6 monospace;margin:8vh auto;max-width:760px;padding:35px;border:1px solid #16632c}h1{font-size:28px;text-shadow:0 0 22px #51f97870}small{color:#70b981}a{color:#bcffd0}</style>
+</head>
+<body>
+<h1>BETAbay // COLLEGAMENTO SANDBOX</h1>
+<p id="message">Ritorno al terminale locale BETAbay in corso…</p>
+<small>Questa pagina serve solo per l'account TESTUSER_ del Sandbox. Non usarla per autorizzare il negozio reale.</small>
+<script>
+'use strict';
+// Solo relay di navigazione nel browser. Nessuna chiamata a servizi esterni.
+const p=new URLSearchParams(location.search);
+const fields=new URLSearchParams();
+for(const k of ['code','state','error'])if(p.has(k))fields.set(k,p.get(k));
+const destination='http://127.0.0.1:8787/ebay/sandbox/callback?'+fields.toString();
+if(p.has('code')&&p.has('state') || p.has('error')&&p.has('state')){
+  // La pagina GitHub riceve un codice temporaneo: utilizzarla SOLO per Sandbox.
+  location.replace(destination);
+}else{
+  document.getElementById('message').textContent='Manca il codice o lo stato OAuth. Avvia il collegamento da BETAbay sul PC.';
+}
+</script>
+</body>
+</html>
